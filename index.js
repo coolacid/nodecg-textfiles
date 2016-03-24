@@ -10,10 +10,10 @@ console.log(config);
 io.on('connect', function(){ 
     console.log('Connected'); 
     for (var bundle in config.bundles) {
-        console.log (bundle);
+        if (config.bundles[bundle]) {
+            io.emit('joinRoom', bundle);
+        }
     };
-    io.emit('joinRoom', 'nodecg-progress');
-//    io.emit("declareReplicant", '{name: "subs", bundle: "nodecg-progress", persistent: true}');
 });
 
 io.on('replicantAssigned', function(data) {
@@ -21,5 +21,3 @@ io.on('replicantAssigned', function(data) {
 });
 
 io.on('disconnect', function(){});
-
-// socket.emit('test')
