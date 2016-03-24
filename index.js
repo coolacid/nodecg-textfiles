@@ -1,7 +1,17 @@
-var io = require('socket.io-client')('ws://localhost:9090');
+yaml = require('js-yaml');
+fs   = require('fs');
+
+var config = yaml.safeLoad(fs.readFileSync('config.yml', 'utf8'));
+
+var io = require('socket.io-client')('ws://' + config.nodecg);
+
+console.log(config);
 
 io.on('connect', function(){ 
     console.log('Connected'); 
+    for (var bundle in config.bundles) {
+        console.log (bundle);
+    };
     io.emit('joinRoom', 'nodecg-progress');
 //    io.emit("declareReplicant", '{name: "subs", bundle: "nodecg-progress", persistent: true}');
 });
